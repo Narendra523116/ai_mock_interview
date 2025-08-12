@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
-import { generator, interviewer } from "@/constants";
+import { generator } from "@/constants";
 // import { createFeedback } from "@/lib/actions/general.action";
 
 enum CallStatus {
@@ -76,10 +76,7 @@ const Agent = ({userName,userId,interviewId,feedbackId,type,questions,}: AgentPr
     }, []);
 
     useEffect(() => {
-
         if(callStatus === CallStatus.FINISHED) router.push("/");
-
-
     }, [messages, callStatus, type, userId]);
 
     const handleCall = async () => {
@@ -97,20 +94,22 @@ const Agent = ({userName,userId,interviewId,feedbackId,type,questions,}: AgentPr
                 undefined,
                 generator
             );
-        } else {
-            let formattedQuestions = "";
-            if (questions) {
-                formattedQuestions = questions
-                    .map((question) => `- ${question}`)
-                    .join("\n");
-            }
-
-            await vapi.start(interviewer, {
-                variableValues: {
-                    questions: formattedQuestions,
-                }
-            });
         }
+
+        // else {
+        //     let formattedQuestions = "";
+        //     if (questions) {
+        //         formattedQuestions = questions
+        //             .map((question) => `- ${question}`)
+        //             .join("\n");
+        //     }
+        //
+        //     await vapi.start(interviewer, {
+        //         variableValues: {
+        //             questions: formattedQuestions,
+        //         }
+        //     });
+        // }
     };
 
     const handleDisconnect = () => {
