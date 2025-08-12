@@ -21,14 +21,7 @@ interface SavedMessage {
     content: string;
 }
 
-const Agent = ({
-                   userName,
-                   userId,
-                   interviewId,
-                   feedbackId,
-                   type,
-                   questions,
-               }: AgentProps) => {
+const Agent = ({userName,userId,interviewId,feedbackId,type,questions,}: AgentProps) => {
     const router = useRouter();
     const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
     const [messages, setMessages] = useState<SavedMessage[]>([]);
@@ -52,12 +45,12 @@ const Agent = ({
         };
 
         const onSpeechStart = () => {
-            console.log("speech start");
+            // console.log("speech start");
             setIsSpeaking(true);
         };
 
         const onSpeechEnd = () => {
-            console.log("speech end");
+            // console.log("speech end");
             setIsSpeaking(false);
         };
 
@@ -82,21 +75,29 @@ const Agent = ({
         };
     }, []);
 
+    useEffect(() => {
+
+        if(callStatus === CallStatus.FINISHED) router.push("/");
+
+
+    }, [messages, callStatus, type, userId]);
+
     const handleCall = async () => {
         setCallStatus(CallStatus.CONNECTING);
 
         if (type === "generate") {
             await vapi.start(
                 undefined,
-                undefined,
-                undefined,
-                process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!,
                 {
                     variableValues: {
                         username: userName,
                         userid: userId,
                     },
-                }
+                    clientMessages: ["transcript"],
+                    serverMessages: [],
+                },
+                undefined,
+                generator
             );
         } else {
             let formattedQuestions = "";
@@ -110,6 +111,8 @@ const Agent = ({
                 variableValues: {
                     questions: formattedQuestions,
                 },
+                clientMessages: ["transcript"],
+                serverMessages: [],
             });
         }
     };
@@ -118,6 +121,10 @@ const Agent = ({
         setCallStatus(CallStatus.FINISHED);
         vapi.stop();
     };
+
+    const latestMessage = messages[messages.length - 1]?.content;
+    const isCallInactiveOrFinished = callStatus === CallStatus.INACTIVE || callStatus === CallStatus.FINISHED;
+
 
     return (
         <>
@@ -156,13 +163,13 @@ const Agent = ({
                 <div className="transcript-border">
                     <div className="transcript">
                         <p
-                            key={lastMessage}
+                            key={latestMessage}
                             className={cn(
                                 "transition-opacity duration-500 opacity-0",
                                 "animate-fadeIn opacity-100"
                             )}
                         >
-                            {lastMessage}
+                            {latestMessage}
                         </p>
                     </div>
                 </div>
@@ -179,9 +186,7 @@ const Agent = ({
                         />
 
                         <span className="relative">
-                          {callStatus === "INACTIVE" || callStatus === "FINISHED"
-                              ? "Call"
-                              : ". . ."}
+                          {isCallInactiveOrFinished? "Call" : ". . ."}
                         </span>
                     </button>
                 ) : (
