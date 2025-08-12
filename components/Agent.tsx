@@ -92,9 +92,7 @@ const Agent = ({userName,userId,interviewId,feedbackId,type,questions,}: AgentPr
                     variableValues: {
                         username: userName,
                         userid: userId,
-                    },
-                    clientMessages: ["transcript"],
-                    serverMessages: [],
+                    }
                 },
                 undefined,
                 generator
@@ -110,9 +108,7 @@ const Agent = ({userName,userId,interviewId,feedbackId,type,questions,}: AgentPr
             await vapi.start(interviewer, {
                 variableValues: {
                     questions: formattedQuestions,
-                },
-                clientMessages: ["transcript"],
-                serverMessages: [],
+                }
             });
         }
     };
