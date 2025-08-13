@@ -59,7 +59,7 @@ const Page = async () => {
             </section>
 
 
-            <section className="felx felx-col gap-6 mt-8">
+            <section className="flex flex-col gap-6 mt-8">
                 <h2>Take an interview</h2>
                 <div className="interviews-section">
                     {
