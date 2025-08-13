@@ -10,7 +10,7 @@ const Page = async () => {
 
     const user = await getCurrentUser();
 
-     console.log(user);
+     // console.log(user);
 
     const [userInterviews, latestInterviews] = await  Promise.all([
          getInterviewsByUserId(user?.id!),

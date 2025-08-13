@@ -82,8 +82,6 @@ const Agent = ({userName,userId,interviewId,feedbackId,type,questions,}: AgentPr
     const handleCall = async () => {
         setCallStatus(CallStatus.CONNECTING);
 
-        console.log(userId, userName);
-
         if (type === "generate") {
             await vapi.start(
                 undefined,
