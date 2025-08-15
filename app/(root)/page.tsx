@@ -4,7 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import {dummyInterviews} from "@/constants";
 import Interviewcard from "@/components/Interviewcard";
-import {getCurrentUser, getInterviewsByUserId, getLatestInterviews} from "@/lib/action/auth.action";
+import {getCurrentUser} from '@/lib/action/auth.action'
+import{ getInterviewsByUserId, getLatestInterviews } from "@/lib/action/general.action";
 
 const Page = async () => {
 
