@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
-import { generator, interviewer } from "@/constants";
-// import { createFeedback } from "@/lib/actions/general.action";
+import { interviewer } from "@/constants";
+import {createFeedback} from "@/lib/action/general.action";
 
 enum CallStatus {
     INACTIVE = "INACTIVE",
@@ -77,13 +77,16 @@ const Agent = ({userName,userId,interviewId,feedbackId,type,questions}: AgentPro
 
     const handleGenerateFeedback = async (messages: SavedMessage[]) => {
         console.log("generate feedback");
-        const { success, id } = {
-            success: true,
-            id: 'feedback-id'
-        }
+        const { success, feedbackId: id, error } = await createFeedback({
+            interviewId: interviewId!,
+            userId: userId!,
+            transcript: messages
+        })
 
-        if(success && id){
-            router.push(`/interview/${id}/feedback`);
+        console.log(error);
+
+        if(success && interviewId){
+            router.push(`/interview/${interviewId}/feedback`);
         }else{
             console.log("Error saving feedback");
             router.push("/");

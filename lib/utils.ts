@@ -45,3 +45,13 @@ export const getRandomInterviewCover = () => {
   const randomIndex = Math.floor(Math.random() * interviewCovers.length);
   return `/covers${interviewCovers[randomIndex]}`;
 };
+
+export function toJsDate(v: any): Date {
+    if (!v) return new Date();
+    if (typeof v.toDate === "function") return v.toDate(); // Firestore Timestamp
+    if (v?.seconds && v?.nanoseconds) {
+        return new Date(v.seconds * 1000 + Math.floor(v.nanoseconds / 1e6));
+    }
+    if (v instanceof Date) return v;
+    return new Date(v); // last resort
+}

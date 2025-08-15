@@ -97,199 +97,199 @@ export const mappings = {
     "aws amplify": "amplify",
 };
 
-export const generator: CreateWorkflowDTO = {
-    name: "Generate Interview",
-    nodes: [
-        {
-            name: "start",
-            type: "conversation",
-            isStart: true,
-            metadata: {
-                position: {
-                    x: 0,
-                    y: 0,
-                },
-            },
-            prompt:
-                "Speak first. Greet the user and help them create a new AI Interviewer",
-            voice: {
-                model: "aura-2",
-                voiceId: "thalia",
-                provider: "deepgram",
-            },
-            variableExtractionPlan: {
-                output: [
-                    {
-                        title: "level",
-                        description: "The job experience level.",
-                        type: "string",
-                        enum: ["entry", "mid", "senior"],
-                    },
-                    {
-                        title: "amount",
-                        description: "How many questions would you like to generate?",
-                        type: "number",
-                        enum: [],
-                    },
-                    {
-                        title: "techstack",
-                        description:
-                            "A list of technologies to cover during the job interview. For example, React, Next.js, Express.js, Node and so on...",
-                        type: "string",
-                        enum: [],
-                    },
-                    {
-                        title: "role",
-                        description:
-                            "What role should would you like to train for? For example Frontend, Backend, Fullstack, Design, UX?",
-                        type: "string",
-                        enum: [],
-                    },
-                    {
-                        title: "type",
-                        description: "What type of the interview should it be? ",
-                        type: "string",
-                        enum: ["behavioural", "technical", "mixed"],
-                    },
-                ],
-            },
-        },
-        {
-            name: "apiRequest_1747470739045",
-            type: "apiRequest",
-            metadata: {
-                position: {
-                    x: -16.075937072883846,
-                    y: 703.623428447121,
-                },
-            },
-            method: "POST",
-            url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/vapi/generate`,
-            headers: {
-                type: "object",
-                properties: {},
-            },
-            body: {
-                type: "object",
-                properties: {
-                    role: {
-                        type: "string",
-                        description: "",
-                        value: "{{ role }}",
-                    },
-                    level: {
-                        type: "string",
-                        description: "",
-                        value: "{{ level }}",
-                    },
-                    type: {
-                        type: "string",
-                        description: "",
-                        value: "{{ type }}",
-                    },
-                    amount: {
-                        type: "number",
-                        description: "",
-                        value: "{{ amount }}",
-                    },
-                    userid: {
-                        type: "string",
-                        description: "",
-                        value: "{{ userid }}",
-                    },
-                    techstack: {
-                        type: "string",
-                        description: "",
-                        value: "{{ techstack }}",
-                    },
-                },
-            },
-            output: {
-                type: "object",
-                properties: {},
-            },
-            mode: "blocking",
-            hooks: [],
-        },
-        {
-            name: "conversation_1747721261435",
-            type: "conversation",
-            metadata: {
-                position: {
-                    x: -17.547788169718615,
-                    y: 1003.3409337989506,
-                },
-            },
-            prompt:
-                "Thank the user for the conversation and inform them that the interview was generated successfully.",
-            voice: {
-                provider: "deepgram",
-                voiceId: "thalia",
-                model: "aura-2",
-            },
-        },
-        {
-            name: "conversation_1747744490967",
-            type: "conversation",
-            metadata: {
-                position: {
-                    x: -11.165436030430953,
-                    y: 484.94857971060617,
-                },
-            },
-            prompt: "Say that the Interview will be generated shortly.",
-            voice: {
-                provider: "deepgram",
-                voiceId: "thalia",
-                model: "aura-2",
-            },
-        },
-        {
-            name: "hangup_1747744730181",
-            type: "hangup",
-            metadata: {
-                position: {
-                    x: 76.01267674000721,
-                    y: 1272.0665127156606,
-                },
-            },
-        },
-    ],
-    edges: [
-        {
-            from: "apiRequest_1747470739045",
-            to: "conversation_1747721261435",
-            condition: {
-                type: "ai",
-                prompt: "",
-            },
-        },
-        {
-            from: "start",
-            to: "conversation_1747744490967",
-            condition: {
-                type: "ai",
-                prompt: "If user provided all the required variables",
-            },
-        },
-        {
-            from: "conversation_1747744490967",
-            to: "apiRequest_1747470739045",
-            condition: {
-                type: "ai",
-                prompt: "",
-            },
-        },
-        {
-            from: "conversation_1747721261435",
-            to: "hangup_1747744730181",
-            condition: {
-                type: "ai",
-                prompt: "",
-            },
-        },
-    ],
-};
+// export const generator: CreateWorkflowDTO = {
+//     name: "Generate Interview",
+//     nodes: [
+//         {
+//             name: "start",
+//             type: "conversation",
+//             isStart: true,
+//             metadata: {
+//                 position: {
+//                     x: 0,
+//                     y: 0,
+//                 },
+//             },
+//             prompt:
+//                 "Speak first. Greet the user and help them create a new AI Interviewer",
+//             voice: {
+//                 model: "aura-2",
+//                 voiceId: "thalia",
+//                 provider: "deepgram",
+//             },
+//             variableExtractionPlan: {
+//                 output: [
+//                     {
+//                         title: "level",
+//                         description: "The job experience level.",
+//                         type: "string",
+//                         enum: ["entry", "mid", "senior"],
+//                     },
+//                     {
+//                         title: "amount",
+//                         description: "How many questions would you like to generate?",
+//                         type: "number",
+//                         enum: [],
+//                     },
+//                     {
+//                         title: "techstack",
+//                         description:
+//                             "A list of technologies to cover during the job interview. For example, React, Next.js, Express.js, Node and so on...",
+//                         type: "string",
+//                         enum: [],
+//                     },
+//                     {
+//                         title: "role",
+//                         description:
+//                             "What role should would you like to train for? For example Frontend, Backend, Fullstack, Design, UX?",
+//                         type: "string",
+//                         enum: [],
+//                     },
+//                     {
+//                         title: "type",
+//                         description: "What type of the interview should it be? ",
+//                         type: "string",
+//                         enum: ["behavioural", "technical", "mixed"],
+//                     },
+//                 ],
+//             },
+//         },
+//         {
+//             name: "apiRequest_1747470739045",
+//             type: "apiRequest",
+//             metadata: {
+//                 position: {
+//                     x: -16.075937072883846,
+//                     y: 703.623428447121,
+//                 },
+//             },
+//             method: "POST",
+//             url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/vapi/generate`,
+//             headers: {
+//                 type: "object",
+//                 properties: {},
+//             },
+//             body: {
+//                 type: "object",
+//                 properties: {
+//                     role: {
+//                         type: "string",
+//                         description: "",
+//                         value: "{{ role }}",
+//                     },
+//                     level: {
+//                         type: "string",
+//                         description: "",
+//                         value: "{{ level }}",
+//                     },
+//                     type: {
+//                         type: "string",
+//                         description: "",
+//                         value: "{{ type }}",
+//                     },
+//                     amount: {
+//                         type: "number",
+//                         description: "",
+//                         value: "{{ amount }}",
+//                     },
+//                     userid: {
+//                         type: "string",
+//                         description: "",
+//                         value: "{{ userid }}",
+//                     },
+//                     techstack: {
+//                         type: "string",
+//                         description: "",
+//                         value: "{{ techstack }}",
+//                     },
+//                 },
+//             },
+//             output: {
+//                 type: "object",
+//                 properties: {},
+//             },
+//             mode: "blocking",
+//             hooks: [],
+//         },
+//         {
+//             name: "conversation_1747721261435",
+//             type: "conversation",
+//             metadata: {
+//                 position: {
+//                     x: -17.547788169718615,
+//                     y: 1003.3409337989506,
+//                 },
+//             },
+//             prompt:
+//                 "Thank the user for the conversation and inform them that the interview was generated successfully.",
+//             voice: {
+//                 provider: "deepgram",
+//                 voiceId: "thalia",
+//                 model: "aura-2",
+//             },
+//         },
+//         {
+//             name: "conversation_1747744490967",
+//             type: "conversation",
+//             metadata: {
+//                 position: {
+//                     x: -11.165436030430953,
+//                     y: 484.94857971060617,
+//                 },
+//             },
+//             prompt: "Say that the Interview will be generated shortly.",
+//             voice: {
+//                 provider: "deepgram",
+//                 voiceId: "thalia",
+//                 model: "aura-2",
+//             },
+//         },
+//         {
+//             name: "hangup_1747744730181",
+//             type: "hangup",
+//             metadata: {
+//                 position: {
+//                     x: 76.01267674000721,
+//                     y: 1272.0665127156606,
+//                 },
+//             },
+//         },
+//     ],
+//     edges: [
+//         {
+//             from: "apiRequest_1747470739045",
+//             to: "conversation_1747721261435",
+//             condition: {
+//                 type: "ai",
+//                 prompt: "",
+//             },
+//         },
+//         {
+//             from: "start",
+//             to: "conversation_1747744490967",
+//             condition: {
+//                 type: "ai",
+//                 prompt: "If user provided all the required variables",
+//             },
+//         },
+//         {
+//             from: "conversation_1747744490967",
+//             to: "apiRequest_1747470739045",
+//             condition: {
+//                 type: "ai",
+//                 prompt: "",
+//             },
+//         },
+//         {
+//             from: "conversation_1747721261435",
+//             to: "hangup_1747744730181",
+//             condition: {
+//                 type: "ai",
+//                 prompt: "",
+//             },
+//         },
+//     ],
+// };
 
 export const interviewer: CreateAssistantDTO = {
     name: "Interviewer",
@@ -349,39 +349,67 @@ export const interviewer: CreateAssistantDTO = {
     },
 };
 
+const categoryEnum = z.enum([
+    "Communication Skills",
+    "Technical Knowledge",
+    "Problem Solving",
+    "Cultural Fit",
+    "Confidence and Clarity",
+    "Teamwork & Collaboration",
+    "Adaptability",
+    "Time Management",
+    "Leadership Potential"
+]);
+
 export const feedbackSchema = z.object({
-    totalScore: z.number(),
-    categoryScores: z.tuple([
+    totalScore: z.number().min(0).max(100),
+    categoryScores: z.array(
         z.object({
-            name: z.literal("Communication Skills"),
-            score: z.number(),
-            comment: z.string(),
-        }),
-        z.object({
-            name: z.literal("Technical Knowledge"),
-            score: z.number(),
-            comment: z.string(),
-        }),
-        z.object({
-            name: z.literal("Problem Solving"),
-            score: z.number(),
-            comment: z.string(),
-        }),
-        z.object({
-            name: z.literal("Cultural Fit"),
-            score: z.number(),
-            comment: z.string(),
-        }),
-        z.object({
-            name: z.literal("Confidence and Clarity"),
-            score: z.number(),
-            comment: z.string(),
-        }),
-    ]),
-    strengths: z.array(z.string()),
-    areasForImprovement: z.array(z.string()),
-    finalAssessment: z.string(),
+            name: categoryEnum,
+            score: z.number().min(0).max(100),
+            comment: z.string().min(1, "Comment is required"),
+        })
+    ).length(9, "Must have exactly 9 category scores"),
+    strengths: z.array(z.string()).min(1, "At least one strength is required"),
+    areasForImprovement: z.array(z.string()).min(1, "At least one improvement area is required"),
+    finalAssessment: z.string().min(1, "Final assessment is required"),
 });
+
+
+
+// export const feedbackSchema = z.object({
+//     totalScore: z.number(),
+//     categoryScores: z.tuple([
+//         z.object({
+//             name: z.literal("Communication Skills"),
+//             score: z.number(),
+//             comment: z.string(),
+//         }),
+//         z.object({
+//             name: z.literal("Technical Knowledge"),
+//             score: z.number(),
+//             comment: z.string(),
+//         }),
+//         z.object({
+//             name: z.literal("Problem Solving"),
+//             score: z.number(),
+//             comment: z.string(),
+//         }),
+//         z.object({
+//             name: z.literal("Cultural Fit"),
+//             score: z.number(),
+//             comment: z.string(),
+//         }),
+//         z.object({
+//             name: z.literal("Confidence and Clarity"),
+//             score: z.number(),
+//             comment: z.string(),
+//         }),
+//     ]),
+//     strengths: z.array(z.string()),
+//     areasForImprovement: z.array(z.string()),
+//     finalAssessment: z.string(),
+// });
 
 export const interviewCovers = [
     "/adobe.png",
