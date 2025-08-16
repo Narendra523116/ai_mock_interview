@@ -303,10 +303,10 @@ export const interviewer: CreateAssistantDTO = {
     voice: {
         provider: "11labs",
         voiceId: "sarah",
-        stability: 0.4,
-        similarityBoost: 0.8,
-        speed: 0.9,
-        style: 0.5,
+        stability: 0.75,
+        similarityBoost: 0.65,
+        speed: 0.93,
+        style: 0.6,
         useSpeakerBoost: true,
     },
     model: {

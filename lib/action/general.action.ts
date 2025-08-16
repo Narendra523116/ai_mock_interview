@@ -89,7 +89,7 @@ export async function createFeedback(params : CreateFeedbackParams){
         }
 
         const { object: { totalScore, categoryScores, strengths, areasForImprovement, finalAssessment } } = await generateObject({
-            model: google('gemini-2.0-flash-001'),
+            model: google('gemini-2.5-pro'),
             schema: feedbackSchema,
             prompt: `
         You are an AI interviewer analyzing a mock interview transcript.
